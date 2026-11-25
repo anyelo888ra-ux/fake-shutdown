@@ -193,7 +193,6 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   let stage = 0, running = true, idleTimer = 0, stageTimer = 0, raf = 0;
   let x = 80, y = 65, vx = 2.2, vy = 1.65;
   const IDLE_MS = mobile ? 11000 : 16000;
-  const BLACK_MS = mobile ? 4200 : 4800;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function setStage(next) {
