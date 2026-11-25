@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#05070b">
-<title>System Shutdown Simulator — Demo visual</title>
+<title>Fake Shutdown Simulator — Visual Demo</title>
 <meta name="description" content="Simulación visual de apagado para Windows, macOS, Linux, iPhone y Android. No apaga ni modifica tu dispositivo.">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="canonical" href="https://TU-DOMINIO.example/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://anyelo888ra-ux.github.io/fake-shutdown/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="System Shutdown Simulator">
 <meta property="og:title" content="System Shutdown Simulator">
@@ -202,6 +202,7 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
     if (next === 0) {
       scene.classList.remove("is-black");
       $("mobile-off").style.opacity = "0";
+      $("mobile-off").style.display = "none";
       noSignal.style.display = "none";
       content.style.display = "grid";
       content.classList.remove("fade");
@@ -214,7 +215,10 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
         if (!running || stage !== 1) return;
         content.style.display = "none";
         scene.classList.add("is-black");
-        if (mobile) $("mobile-off").style.display = "block";
+        if (mobile) {
+          $("mobile-off").style.display = "block";
+          requestAnimationFrame(() => { $("mobile-off").style.opacity = "1"; });
+        }
         setStage(2);
       }, mobile ? 1800 : 2100);
     } else {
@@ -249,10 +253,7 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   function armIdle() {
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => {
-      if (running && stage === 0) {
-        setStage(1);
-        stageTimer = setTimeout(() => { if (running && stage === 1) setStage(2); }, BLACK_MS + (mobile ? 1800 : 2100));
-      }
+      if (running && stage === 0) setStage(1);
     }, IDLE_MS);
   }
   function activity() {
@@ -303,7 +304,11 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   ["pointermove","pointerdown","touchstart","wheel"].forEach(type =>
     window.addEventListener(type, activity, {passive:true})
   );
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) activity(); });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) activity();
+    else { clearTimeout(idleTimer); clearTimeout(stageTimer); }
+  });
+  window.addEventListener("resize", () => { if (running && stage === 2 && !mobile) bounce(); });
   setTimeout(() => hint.classList.add("hide"), 7500);
   armIdle();
 })();
