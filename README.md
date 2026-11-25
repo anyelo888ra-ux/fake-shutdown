@@ -1,22 +1,33 @@
-# Fake Shutdown Simulator v0.4
+# Fake Shutdown Simulator v0.5
 
-Incluye:
-- `index.html`: simulación de escritorio y móvil.
-- `favicon.svg`: icono del sitio.
-- `og-banner.svg`: banner Open Graph/Twitter.
-- `README.txt`: instrucciones de publicación.
+A lightweight, responsive browser-only visual shutdown simulation for desktop and mobile.
 
-## Móvil
-- iPhone/iPad: interfaz de apagado inspirada en iOS y transición a pantalla negra tipo pantalla apagada.
-- Android: interfaz propia y transición a reposo oscuro.
-- La actividad táctil despierta la simulación.
-- En Android y navegadores compatibles, el botón intenta activar Fullscreen.
-- En iPhone, Safari no permite a una página web normal forzar fullscreen. La web explica cómo usar Compartir → Añadir a pantalla de inicio; el modo standalone depende de la versión de iOS y del navegador.
+## Features
 
-## Publicar
-Sube los tres archivos a la misma carpeta pública.
-Reemplaza `https://TU-DOMINIO.example/` en las etiquetas canonical, Open Graph y Twitter por el dominio real.
-El banner SVG puede no ser aceptado por algunos crawlers sociales; si falla la previsualización, conviértelo a PNG 1200x630 y actualiza `og:image` y `twitter:image`.
+- Approximate detection for Windows, macOS, Linux, iPhone/iPad and Android.
+- Desktop shutdown-style screen followed by a black screen and a bouncing **NO SIGNAL** label.
+- Mobile-specific iOS and Android-inspired screens with a dark screen-off transition.
+- Touch, mouse or keyboard activity wakes the simulation.
+- Fullscreen helper for supported browsers; iOS guidance is shown where browser fullscreen is restricted.
+- Reduced-motion support and responsive portrait/landscape layouts.
+- Visible notice that this is only a visual simulation.
 
-La detección del sistema operativo es aproximada: los navegadores pueden ocultar o reducir la información de plataforma.
-La simulación no apaga el dispositivo, no bloquea controles ni modifica el sistema.
+## Run locally
+
+Open `index.html` in a modern browser. No installation, build step, framework or server is required.
+
+## GitHub Pages
+
+This repository is configured for the project URL:
+
+https://anyelo888ra-ux.github.io/fake-shutdown/
+
+In GitHub, open **Settings → Pages** and select **Deploy from a branch**, branch **main**, folder **/(root)**.
+
+## Safety
+
+This project only displays a browser animation. It does not shut down or restart the computer, imitate a real system crash, lock input, change system settings, or modify files.
+
+## Limitations
+
+Operating-system detection is approximate because browsers may hide or reduce platform information. The visual style is an imitation, not a native operating-system screen.
