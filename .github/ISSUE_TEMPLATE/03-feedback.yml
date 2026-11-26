@@ -1,0 +1,26 @@
+name: "💬 Comentarios generales"
+description: "Comparte una opinión, pregunta o idea que no sea un error."
+title: "[FEEDBACK] "
+labels: ["question"]
+body:
+  - type: dropdown
+    id: topic
+    attributes:
+      label: "Tema"
+      options:
+        - Experiencia general
+        - Diseño visual
+        - Rendimiento
+        - Compatibilidad
+        - NOVA DISPLAY
+        - Documentación
+        - Otro
+    validations:
+      required: true
+  - type: textarea
+    id: message
+    attributes:
+      label: "Tu comentario"
+      description: "Sé respetuoso y no incluyas información personal."
+    validations:
+      required: true
