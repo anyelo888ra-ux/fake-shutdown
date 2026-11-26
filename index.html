@@ -84,6 +84,54 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
 #scene.mobile[data-family="android"] #system-title{font-weight:500}
 @media(orientation:landscape) and (max-height:500px){#scene.mobile #system-icon{width:38px;height:38px;margin-bottom:12px}#scene.mobile #progress-wrap{margin-top:16px}#scene.mobile #spinner{margin-top:12px}#scene.mobile #system-detail{margin-top:9px}}
 @media(prefers-reduced-motion:reduce){#progress,#spinner{animation:none}#progress{left:33%}*,*:before,*:after{transition-duration:.01ms!important}}
+
+/* Monitor OSD */
+#monitor-key{position:absolute;right:18px;bottom:48px;z-index:25;border:1px solid #ffffff35;border-radius:50%;width:44px;height:44px;background:#111923e8;color:#fff;display:grid;place-items:center;cursor:pointer;opacity:.42;transition:.2s;backdrop-filter:blur(10px)}
+#monitor-key:hover,#monitor-key:focus-visible{opacity:1;transform:scale(1.06)}
+#osd{position:absolute;inset:0;z-index:28;display:none;place-items:center;background:radial-gradient(ellipse at center,#0b111bcc,#020407eF);backdrop-filter:blur(7px);padding:18px}
+#osd.open{display:grid;animation:osd-in .22s ease-out}
+@keyframes osd-in{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
+.osd-shell{width:min(650px,94vw);max-height:min(680px,90vh);overflow:auto;border:1px solid #ffffff24;border-radius:25px;background:linear-gradient(145deg,#17212dF5,#080d14F8);box-shadow:0 28px 100px #000d;color:#edf4ff;padding:20px;font:13px/1.45 Inter,"Segoe UI",sans-serif}
+.osd-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 2px 15px;border-bottom:1px solid #ffffff18}
+.osd-brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.12em;font-size:11px}
+.osd-brand svg{width:31px;height:31px;flex:none}
+.osd-meta{font:10px ui-monospace,monospace;color:#8ea1b8;text-align:right}
+.osd-main{display:grid;grid-template-columns:minmax(190px,.9fr) minmax(220px,1.1fr);gap:20px;padding-top:19px}
+.osd-wheel{position:relative;aspect-ratio:1;max-width:280px;width:100%;margin:auto;border-radius:50%;border:1px solid #ffffff20;background:radial-gradient(circle,#202e40 0 27%,#101a27 28% 63%,#0a111b 64%);box-shadow:inset 0 0 35px #0009,0 10px 35px #0007}
+.osd-wheel:before{content:"";position:absolute;inset:17%;border:1px solid #ffffff16;border-radius:50%}
+.wheel-center{position:absolute;inset:36%;display:grid;place-items:center;text-align:center;color:#a9bad0;font:10px ui-monospace,monospace;letter-spacing:.12em}
+.wheel-center b{display:block;font:700 12px Inter,sans-serif;color:#f4f7fc;letter-spacing:.08em}
+.wheel-btn{position:absolute;width:72px;height:72px;border:1px solid #ffffff22;border-radius:50%;background:#1b2939;color:#eaf2ff;display:grid;place-items:center;gap:1px;cursor:pointer;box-shadow:0 5px 15px #0008;transition:.16s;font-size:10px}
+.wheel-btn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.wheel-btn:hover,.wheel-btn:focus-visible{background:#315071;border-color:#8bc5ff;transform:scale(1.07)}
+.wheel-btn.top{top:-4px;left:50%;transform:translateX(-50%)}
+.wheel-btn.left{left:-4px;top:50%;transform:translateY(-50%)}
+.wheel-btn.right{right:-4px;top:50%;transform:translateY(-50%)}
+.wheel-btn.bottom{bottom:-4px;left:50%;transform:translateX(-50%)}
+.wheel-btn.top:hover{transform:translateX(-50%) scale(1.07)}.wheel-btn.left:hover{transform:translateY(-50%) scale(1.07)}.wheel-btn.right:hover{transform:translateY(-50%) scale(1.07)}.wheel-btn.bottom:hover{transform:translateX(-50%) scale(1.07)}
+.osd-panel{min-width:0}
+.osd-panel h2{font-size:19px;margin:2px 0 5px;font-weight:600}
+.osd-sub{font-size:11px;color:#94a8bf;margin:0 0 15px}
+.osd-card{border:1px solid #ffffff17;border-radius:13px;background:#ffffff08;padding:12px;margin:9px 0}
+.osd-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0}
+.osd-row span:first-child{color:#b7c5d7}
+.osd-value{color:#f1f6ff;font:11px ui-monospace,monospace;text-align:right}
+.osd-action,.osd-select{border:1px solid #ffffff25;border-radius:8px;background:#1b2a3b;color:#edf4ff;padding:8px 10px;font:11px Inter,sans-serif;cursor:pointer}
+.osd-action:hover,.osd-select:hover{background:#2a4058}
+.osd-range{width:100%;accent-color:#8bc5ff;cursor:pointer}
+.osd-tabs{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.osd-tab{border:1px solid #ffffff20;border-radius:8px;padding:7px 10px;background:#101a27;color:#b9c8da;cursor:pointer;font-size:11px}
+.osd-tab.active{background:#294766;border-color:#79b9f2;color:#fff}
+.osd-foot{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid #ffffff18;padding-top:13px;margin-top:15px;color:#8498b0;font:10px ui-monospace,monospace}
+.osd-close{border:1px solid #ffffff25;border-radius:8px;background:#243449;color:#fff;padding:7px 12px;cursor:pointer}
+.osd-list{display:grid;gap:7px}
+.osd-option{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:10px 11px;border:1px solid #ffffff19;border-radius:9px;background:#101a27;color:#eaf1fb;text-align:left;cursor:pointer}
+.osd-option.active{border-color:#83bfff;background:#1b344b}
+.osd-option small{display:block;color:#92a6bd;margin-top:3px}
+.osd-badge{font:9px ui-monospace,monospace;color:#8bc5ff}
+#monitor-toast{position:absolute;z-index:29;left:50%;bottom:68px;transform:translateX(-50%);padding:8px 12px;border:1px solid #ffffff25;border-radius:8px;background:#101a27;color:#dce9f8;font:11px ui-monospace,monospace;display:none;white-space:nowrap}
+@media(max-width:600px){.osd-main{grid-template-columns:1fr;gap:14px}.osd-wheel{width:min(245px,72vw)}.osd-shell{padding:14px;border-radius:18px}.osd-panel h2{font-size:17px}.wheel-btn{width:65px;height:65px}#monitor-key{right:12px;bottom:42px}}
+
 </style>
 </head>
 <body>
@@ -106,6 +154,37 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   <div id="watermark">SIMULACIÓN VISUAL · NO APAGA EL DISPOSITIVO</div>
   <div id="phase">INICIANDO SIMULACIÓN</div>
   <button id="exit" type="button" title="Salir de la simulación">Salir · ESC</button>
+
+  <button id="monitor-key" type="button" title="Menú del monitor (M)" aria-label="Abrir menú del monitor">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+  </button>
+  <div id="monitor-toast" role="status"></div>
+  <section id="osd" aria-label="Menú en pantalla del monitor">
+    <div class="osd-shell">
+      <header class="osd-head">
+        <div class="osd-brand">
+          <svg viewBox="0 0 40 40" aria-label="NOVA Monitor"><defs><linearGradient id="novaG" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a7dcff"/><stop offset="1" stop-color="#5488ff"/></linearGradient></defs><rect x="2" y="2" width="36" height="36" rx="11" fill="#172b43" stroke="#8bc5ff" stroke-opacity=".5"/><path d="M10 27V13l20 14V13" fill="none" stroke="url(#novaG)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="31" cy="30" r="2" fill="#8bc5ff"/></svg>
+          <div>NOVA DISPLAY <div class="osd-meta" style="text-align:left">ON-SCREEN DISPLAY · SIMULADO</div></div>
+        </div>
+        <div class="osd-meta"><span id="osd-clock">--:--</span><br><span id="osd-model">NOVA VX-27Q</span></div>
+      </header>
+      <div class="osd-main">
+        <div>
+          <div class="osd-wheel">
+            <div class="wheel-center">NOVA <b id="wheel-current">MENÚ</b></div>
+            <button class="wheel-btn top" data-page="brightness" title="Brillo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>Brillo</button>
+            <button class="wheel-btn left" data-page="input" title="Entrada"><svg viewBox="0 0 24 24"><path d="M4 7h6l2 3h8M4 17h6l2-3h8"/><path d="m16 4 4 3-4 3m0 4 4 3-4 3"/></svg>Entrada</button>
+            <button class="wheel-btn right" data-page="picture" title="Modo de imagen"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></svg>Imagen</button>
+            <button class="wheel-btn bottom" data-page="settings" title="Ajustes"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></svg>Ajustes</button>
+          </div>
+          <div class="osd-tabs"><button class="osd-tab active" data-page="home">Inicio</button><button class="osd-tab" data-page="settings">☷ Ajustes</button><button class="osd-tab" data-page="system">Sistema</button></div>
+        </div>
+        <div class="osd-panel" id="osd-panel"></div>
+      </div>
+      <footer class="osd-foot"><span>▲ ▼ Navegar · ENTER Seleccionar · M Cerrar</span><button class="osd-close" id="osd-close">Cerrar</button></footer>
+    </div>
+  </section>
+
   <section id="reveal"><div class="box"><h2>Era una simulación 😅</h2><p>Esta página solo mostró una animación visual. No apagó el equipo ni modificó el sistema.</p><button id="again" type="button">Volver a iniciar</button></div></section>
 </div>
 <script>
@@ -308,6 +387,80 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
     else { clearTimeout(idleTimer); clearTimeout(stageTimer); }
   });
   window.addEventListener("resize", () => { if (running && stage === 2 && !mobile) bounce(); });
+
+  // OSD de monitor ficticio: todos los cambios son locales a esta página.
+  const osd = $("osd"), osdPanel = $("osd-panel"), toast = $("monitor-toast");
+  const monitor = { page:"home", brightness:82, contrast:72, sharpness:50, input:"HDMI 1", mode:"Estándar", colorTemp:"Frío", resolution:"", refresh:"", power:false, doubleAt:0 };
+  const inputs = ["HDMI 1","HDMI 2","DisplayPort","USB-C"];
+  const modes = ["Estándar","Película","Juego","Lectura","sRGB","Eco"];
+  const resChoices = ["Automática","1920 × 1080","2560 × 1440","3840 × 2160"];
+  function measureDisplay(){
+    const dpr = window.devicePixelRatio || 1;
+    monitor.resolution = Math.round(screen.width*dpr)+" × "+Math.round(screen.height*dpr);
+    monitor.refresh = "No disponible en navegador";
+    $("osd-clock").textContent = new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+  }
+  function showToast(msg){
+    toast.textContent=msg; toast.style.display="block";
+    clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>toast.style.display="none",2100);
+  }
+  function openOSD(page){
+    if(!running)return;
+    monitor.page=page||"home"; measureDisplay();
+    osd.classList.add("open"); osd.setAttribute("aria-hidden","false");
+    renderOSD();
+  }
+  function closeOSD(){osd.classList.remove("open");osd.setAttribute("aria-hidden","true");}
+  function setPage(page){monitor.page=page;renderOSD();}
+  function row(label,value){return '<div class="osd-row"><span>'+label+'</span><span class="osd-value">'+value+'</span></div>';}
+  function renderOSD(){
+    const p=monitor.page;
+    $("wheel-current").textContent=({home:"MENÚ",brightness:"BRILLO",input:"ENTRADA",picture:"IMAGEN",settings:"AJUSTES",system:"SISTEMA"}[p]||"MENÚ");
+    document.querySelectorAll(".osd-tab").forEach(b=>b.classList.toggle("active",b.dataset.page===p));
+    let out="";
+    if(p==="home"){
+      out='<h2>Menú del monitor</h2><p class="osd-sub">Selecciona una función del panel NOVA.</p><div class="osd-card">'+row("Estado","<span class='osd-badge'>ENCENDIDO · DEMO</span>")+row("Entrada activa",monitor.input)+row("Modo de imagen",monitor.mode)+row("Brillo",monitor.brightness+"%")+'</div><div class="osd-card"><div class="osd-row"><span>Acceso rápido</span><span class="osd-badge">OSD 1.0</span></div><div class="osd-list"><button class="osd-option" data-page="brightness">☼ <span>Brillo y contraste<small>Ajusta la luminosidad simulada</small></span> ›</button><button class="osd-option" data-page="input">⇄ <span>Fuente de entrada<small>HDMI / DisplayPort / USB-C</small></span> ›</button><button class="osd-option" data-page="settings">☷ <span>Configuración avanzada<small>Imagen, pantalla y sistema</small></span> ›</button></div></div>';
+    } else if(p==="brightness"){
+      out='<h2>Brillo y pantalla</h2><p class="osd-sub">Controles visuales del monitor ficticio.</p><div class="osd-card">'+row("Brillo",monitor.brightness+'%')+'<input class="osd-range" id="brightness-range" type="range" min="0" max="100" value="'+monitor.brightness+'">'+row("Contraste",monitor.contrast+'%')+'<input class="osd-range" id="contrast-range" type="range" min="0" max="100" value="'+monitor.contrast+'"><div class="osd-row"><span>Filtro de luz azul</span><button class="osd-action" id="blue-light">'+(monitor.blue?"Activado":"Desactivado")+'</button></div></div><p class="osd-sub">El brillo solo modifica la apariencia de esta simulación; no cambia el brillo físico.</p>';
+    } else if(p==="input"){
+      out='<h2>Fuente de entrada</h2><p class="osd-sub">Cambia la entrada simulada para probar otros sistemas operativos.</p><div class="osd-list">'+inputs.map(v=>'<button class="osd-option '+(monitor.input===v?'active':'')+'" data-input="'+v+'"><span>'+v+'<small>'+(v===monitor.input?"Fuente seleccionada":"Detectar señal (simulado)")+'</small></span><span class="osd-badge">'+(v===monitor.input?"ACTIVA":"CAMBIAR")+'</span></button>').join("")+'</div><div class="osd-card">'+row("Entrada seleccionada",monitor.input)+row("Señal","Simulada")+'</div>';
+    } else if(p==="picture"){
+      out='<h2>Modo de imagen</h2><p class="osd-sub">Perfiles de visualización de NOVA.</p><div class="osd-list">'+modes.map(v=>'<button class="osd-option '+(monitor.mode===v?'active':'')+'" data-mode="'+v+'"><span>'+v+'<small>'+({Estándar:"Equilibrio general",Película:"Tonos cálidos y suaves",Juego:"Contraste dinámico",Lectura:"Menos luz azul",sRGB:"Color de referencia",Eco:"Ahorro visual"}[v])+'</small></span><span class="osd-badge">'+(monitor.mode===v?"ACTIVO":"APLICAR")+'</span></button>').join("")+'</div>';
+    } else if(p==="settings"){
+      out='<h2>Ajustes avanzados</h2><p class="osd-sub">Parámetros de pantalla y experiencia.</p><div class="osd-card">'+row("Resolución del navegador",monitor.resolution)+row("Escala de píxeles",String(window.devicePixelRatio||1)+"×")+row("Área visible",window.innerWidth+" × "+window.innerHeight)+row("Orientación",matchMedia("(orientation: portrait)").matches?"Vertical":"Horizontal")+'</div><div class="osd-card"><div class="osd-row"><span>Temperatura de color</span><select class="osd-select" id="color-temp">'+["Frío","Normal","Cálido"].map(v=>'<option '+(monitor.colorTemp===v?'selected':'')+'>'+v+'</option>').join("")+'</select></div><div class="osd-row"><span>Nitidez</span><span class="osd-value">'+monitor.sharpness+'%</span></div><input class="osd-range" id="sharpness-range" type="range" min="0" max="100" value="'+monitor.sharpness+'"></div><div class="osd-list"><button class="osd-option" data-page="brightness">☼ Brillo y contraste <span>›</span></button><button class="osd-option" data-page="system">ⓘ Información del sistema <span>›</span></button></div>';
+    } else {
+      out='<h2>Información del sistema</h2><p class="osd-sub">Identificación y señal de esta demostración.</p><div class="osd-card">'+row("Marca","NOVA DISPLAY")+row("Modelo","VX-27Q · Concept")+row("Sistema detectado",label)+row("Entrada",monitor.input)+row("Resolución física reportada",monitor.resolution)+row("Frecuencia","El navegador no la expone")+row("Estado","Simulador activo")+'</div><p class="osd-sub">La web no puede consultar el modelo real del monitor ni la frecuencia física exacta desde un navegador normal.</p>';
+    }
+    osdPanel.innerHTML=out;
+    osdPanel.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>setPage(b.dataset.page)));
+    osdPanel.querySelectorAll("[data-input]").forEach(b=>b.addEventListener("click",()=>{monitor.input=b.dataset.input;setPage("input");showToast("Entrada cambiada: "+monitor.input+" · señal simulada");}));
+    osdPanel.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{monitor.mode=b.dataset.mode;setPage("picture");showToast("Modo de imagen: "+monitor.mode);}));
+    const br=$("brightness-range");if(br)br.addEventListener("input",e=>{monitor.brightness=+e.target.value;renderOSD();});
+    const cr=$("contrast-range");if(cr)cr.addEventListener("input",e=>{monitor.contrast=+e.target.value;renderOSD();});
+    const sr=$("sharpness-range");if(sr)sr.addEventListener("input",e=>{monitor.sharpness=+e.target.value;renderOSD();});
+    const ct=$("color-temp");if(ct)ct.addEventListener("change",e=>{monitor.colorTemp=e.target.value;showToast("Temperatura: "+monitor.colorTemp);});
+    const bl=$("blue-light");if(bl)bl.addEventListener("click",()=>{monitor.blue=!monitor.blue;renderOSD();});
+  }
+  $("monitor-key").addEventListener("click",()=>osd.classList.contains("open")?closeOSD():openOSD("home"));
+  $("osd-close").addEventListener("click",closeOSD);
+  osd.addEventListener("click",e=>{if(e.target===osd)closeOSD();});
+  document.querySelectorAll(".wheel-btn").forEach(b=>b.addEventListener("click",()=>setPage(b.dataset.page)));
+  document.querySelectorAll(".osd-tab").forEach(b=>b.addEventListener("click",()=>setPage(b.dataset.page)));
+  $("no-signal").addEventListener("dblclick",()=>{monitor.power=!monitor.power;if(monitor.power){setStage(0);showToast("Monitor reactivado · simulación");}else{setStage(2);showToast("Monitor en reposo · NO SIGNAL");}});
+  $("monitor-key").addEventListener("dblclick",e=>{e.preventDefault();monitor.power=!monitor.power;if(monitor.power){setStage(0);showToast("Monitor reactivado · simulación");}else{closeOSD();setStage(2);showToast("Monitor apagado · NO SIGNAL");}});
+  document.addEventListener("keydown",e=>{
+    if(e.key.toLowerCase()==="m"&&!e.repeat){if(osd.classList.contains("open"))closeOSD();else openOSD("home");}
+    if(e.key==="Escape"&&osd.classList.contains("open")){e.stopPropagation();closeOSD();}
+    if(osd.classList.contains("open")){
+      if(e.key==="ArrowUp"||e.key==="ArrowDown"){const r=$("brightness-range");if(r){e.preventDefault();monitor.brightness=Math.max(0,Math.min(100,monitor.brightness+(e.key==="ArrowUp"?2:-2)));r.value=monitor.brightness;renderOSD();}}
+      if(e.key==="ArrowLeft")setPage("input");
+      if(e.key==="ArrowRight")setPage("brightness");
+      if(e.key==="Enter")setPage("settings");
+    }
+  },true);
+  measureDisplay();
+  window.addEventListener("resize",()=>{measureDisplay();if(osd.classList.contains("open"))renderOSD();});
+
   setTimeout(() => hint.classList.add("hide"), 7500);
   armIdle();
 })();
