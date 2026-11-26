@@ -213,13 +213,14 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   } else if (/macintosh|mac os x/i.test(ua) || /mac/i.test(platform)) {
     family = "mac"; variant = "mac"; label = "macOS";
   } else if (/ubuntu/i.test(ua.toLowerCase())) {
-    family = "linux"; variant = "ubuntu"; label = "Ubuntu";
+    family = "linux"; variant = "ubuntu"; label = "Ubuntu (detectado)";
   } else if (/fedora/i.test(ua.toLowerCase())) {
-    family = "linux"; variant = "fedora"; label = "Fedora";
+    family = "linux"; variant = "fedora"; label = "Fedora (detectado)";
   } else if (/debian/i.test(ua.toLowerCase())) {
-    family = "linux"; variant = "debian"; label = "Debian";
+    family = "linux"; variant = "debian"; label = "Debian (detectado)";
   } else if (/linux/i.test(ua) || /linux/i.test(platform)) {
-    family = "linux"; variant = "linux"; label = "Linux";
+    // Los navegadores normalmente no revelan la distro: no adivinamos.
+    family = "linux"; variant = "linux"; label = "Linux (distribución no identificada)";
   }
 
   const icons = {
@@ -231,6 +232,17 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
     "ubuntu": `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="25" fill="none" stroke="#f28b36" stroke-width="8"/><circle cx="32" cy="7" r="5" fill="#fff"/><circle cx="10" cy="45" r="5" fill="#fff"/><circle cx="54" cy="45" r="5" fill="#fff"/></svg>`,
     "fedora": `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#3688d8"/><path d="M42 15H29c-8 0-13 5-13 13v21h9V28c0-3 2-5 5-5h12v-8Zm6 17h-9c-7 0-12 5-12 12v5h9v-5c0-2 1-3 3-3h9v-9Z" fill="#fff"/></svg>`,
     "debian": `<svg viewBox="0 0 64 64"><path d="M42 10c-12-7-27 1-28 16-1 12 7 24 19 25 8 1 15-5 16-13 1-8-5-15-12-14-5 1-7 6-5 10 2 3 6 4 9 2" fill="none" stroke="#e34b68" stroke-width="6" stroke-linecap="round"/></svg>`,
+    "arch": `<svg viewBox="0 0 64 64"><path fill="#1793d1" d="M32 4 7 58h13l12-27 12 27h13L32 4Z"/><path fill="#fff" d="M32 34c-8 0-13 5-13 11 0 5 4 8 9 8 7 0 12-7 12-13 0-4-3-6-8-6Z"/></svg>`,
+    "manjaro": `<svg viewBox="0 0 64 64"><path fill="#35bf80" d="M7 7h50v14H21v36H7V7Zm22 22h14v28H29V29Zm21 0h7v28h-7V29Z"/></svg>`,
+    "mint": `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#87c541"/><path d="M17 45V25a8 8 0 0 1 16 0v20m0-20a8 8 0 0 1 16 0v20" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>`,
+    "kali": `<svg viewBox="0 0 64 64"><path d="M8 44c8-18 19-30 37-27-5 5-8 10-9 15 8-3 15-2 21 3-10 0-16 4-20 12-8 3-18 2-29-3Z" fill="#557cba"/><path d="M13 47c11 4 22 2 31-6" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>`,
+    "opensuse": `<svg viewBox="0 0 64 64"><path fill="#73ba25" d="M32 5a27 27 0 1 0 0 54 27 27 0 0 0 0-54Z"/><path fill="#fff" d="M43 18a9 9 0 1 0 0 18h4a7 7 0 1 1-7 7h-5a12 12 0 1 0 12-12h-4a4 4 0 1 1 4-4h5a9 9 0 0 0-9-9Z"/></svg>`,
+    "pop": `<svg viewBox="0 0 64 64"><path fill="#48b9c7" d="M8 8h48v48H8z"/><path fill="#fff" d="M19 19h15c10 0 15 5 15 13S44 45 34 45h-5v8H19V19Zm10 9v8h5c3 0 5-1 5-4s-2-4-5-4h-5Z"/></svg>`,
+    "elementary": `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#6d8db5"/><path d="M17 39c0-11 7-19 16-19s15 7 15 17H27c1 5 4 8 9 8 4 0 7-2 9-4l4 5c-4 5-9 7-15 7-10 0-17-6-17-14Zm10-8h13c-1-4-3-6-7-6-3 0-5 2-6 6Z" fill="#fff"/></svg>`,
+    "zorin": `<svg viewBox="0 0 64 64"><rect x="5" y="5" width="54" height="54" rx="14" fill="#1686c8"/><path d="M17 20h30v6L27 40h20v7H17v-6l20-14H17v-7Z" fill="#fff"/></svg>`,
+    "alpine": `<svg viewBox="0 0 64 64"><path d="m32 7 27 48H5L32 7Z" fill="#0d83c7"/><path d="m32 23 7 13h-5l-2-4-2 4h-5l7-13Z" fill="#fff"/></svg>`,
+    "nixos": `<svg viewBox="0 0 64 64"><path d="M13 8h12l26 45H39L13 8Zm38 0L39 30l-6-10 7-12h11ZM13 56l12-21 6 10-6 11H13Zm18-21 6-10 13 22H38L31 35Z" fill="#5277c3"/></svg>`,
+    "endeavour": `<svg viewBox="0 0 64 64"><path d="M32 5 4 56h10L32 24l18 32h10L32 5Z" fill="#7b4fe0"/><path d="M32 35 22 56h20L32 35Z" fill="#d5c8ff"/></svg>`,
     "linux": `<svg viewBox="0 0 64 64"><path fill="#e8e8e8" d="M32 5c-10 0-15 9-15 20v7c-5 5-8 11-7 17 1 6 7 8 12 5l4-4h12l4 4c5 3 11 1 12-5 1-6-2-12-7-17v-7C47 14 42 5 32 5Z"/><ellipse cx="26" cy="28" rx="2.4" ry="3.2" fill="#252525"/><ellipse cx="38" cy="28" rx="2.4" ry="3.2" fill="#252525"/><path d="m29 35 3 2 3-2" fill="none" stroke="#252525" stroke-width="2" stroke-linecap="round"/></svg>`,
     "ios": `<svg viewBox="0 0 64 64"><rect x="15" y="4" width="34" height="56" rx="8" fill="none" stroke="#f5f5f7" stroke-width="4"/><path d="M27 10h10" stroke="#f5f5f7" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="53" r="2" fill="#f5f5f7"/><path d="M32 20v13m-7-7h14" stroke="#f5f5f7" stroke-width="2.5" stroke-linecap="round"/></svg>`,
     "android": `<svg viewBox="0 0 64 64"><path d="M15 25a17 17 0 0 1 34 0v21H15V25Z" fill="#b7f4d0"/><path d="m20 11-5-7m29 7 5-7" stroke="#b7f4d0" stroke-width="3" stroke-linecap="round"/><circle cx="25" cy="22" r="2" fill="#18352b"/><circle cx="39" cy="22" r="2" fill="#18352b"/><path d="M10 29v15m44-15v15M22 48v9m20-9v9" stroke="#b7f4d0" stroke-width="5" stroke-linecap="round"/></svg>`,
@@ -292,15 +304,16 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
       $("phase").textContent = mobile ? "PANTALLA APAGADA · SIMULACIÓN" : "PANTALLA NEGRA · SIMULACIÓN";
       content.classList.add("fade");
       const shutdownSteps = family === "windows"
-        ? ["Closing applications…","Stopping system services…","Saving your settings…","Preparing shutdown…"]
+        ? (variant === "xp" ? ["Saving your settings…","Logging off…","Windows is shutting down…"] : variant === "win7" ? ["Logging off…","Shutting down services…","Preparing shutdown…","Shutting down…"] : ["Closing apps…","Stopping services…","Saving system state…","Shutting down…"])
         : family === "mac"
           ? ["Closing apps…","Saving your session…","Stopping background services…","Powering off…"]
           : family === "linux"
-            ? ["Stopping user sessions…","Unmounting file systems…","Stopping system services…","Powering off…"]
+            ? (variant === "alpine" ? ["Stopping OpenRC services…","Unmounting filesystems…","Powering off…"] : variant === "nixos" ? ["Stopping user services…","Switching system profile…","Unmounting filesystems…","Powering off…"] : ["Stopping user sessions…","Stopping background services…","Unmounting filesystems…","Powering off…"])
             : family === "ios" || family === "android"
               ? ["Cerrando aplicaciones…","Deteniendo servicios…","Guardando estado…","Apagando pantalla…"]
               : ["Ending user session…","Stopping services…","Preparing power off…"];
-      const shutdownDuration = mobile ? 6200 : variant === "xp" ? 5200 : variant === "win7" ? 6500 : family === "mac" ? 7800 : family === "linux" ? 7200 : 8500;
+      const durationByVariant = {xp:5200,win7:6600,"win10-11":8200,ubuntu:7600,fedora:7900,debian:7300,arch:8100,mint:7400,manjaro:7800,kali:8400,opensuse:7700,pop:8000,elementary:7500,zorin:7600,alpine:6900,nixos:8800,endeavour:8200,mac:9000,android:6100,ios:6400};
+      const shutdownDuration = mobile ? 6200 : (durationByVariant[variant] || (family === "linux" ? 7600 : 8500));
       let step = 0;
       $("system-detail").textContent = shutdownSteps[0];
       phaseTimer = setInterval(() => {
@@ -410,13 +423,13 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
 
   // OSD de monitor ficticio: todos los cambios son locales a esta página.
   const osd = $("osd"), osdPanel = $("osd-panel"), toast = $("monitor-toast");
-  const monitor = { page:"home", brightness:82, contrast:72, sharpness:50, input:"HDMI 1", mode:"Estándar", colorTemp:"Frío", resolution:"", refresh:"", power:true, doubleAt:0 };
-  const inputs = ["HDMI 1","HDMI 2","DisplayPort","USB-C"];
+  const monitor = { page:"home", brightness:82, contrast:72, sharpness:50, input:"HDMI 1 · Windows 11", mode:"Estándar", colorTemp:"Frío", resolution:"", resolutionMode:"Automática", refresh:"", power:true, doubleAt:0 };
+  const inputs = ["HDMI 1 · Windows 11","HDMI 2 · macOS","DisplayPort · Ubuntu","USB-C · Android","HDMI 1 · Windows 7","HDMI 2 · Windows XP","DisplayPort · Fedora","USB-C · Debian","DisplayPort · Arch Linux","HDMI 1 · Linux Mint","HDMI 2 · Manjaro","DisplayPort · Kali Linux","USB-C · openSUSE","HDMI 1 · Pop!_OS","HDMI 2 · elementary OS","DisplayPort · Zorin OS","USB-C · Alpine Linux","HDMI 1 · NixOS","HDMI 2 · EndeavourOS"];
   const modes = ["Estándar","Película","Juego","Lectura","sRGB","Eco"];
   const resChoices = ["Automática","1920 × 1080","2560 × 1440","3840 × 2160"];
   function measureDisplay(){
     const dpr = window.devicePixelRatio || 1;
-    monitor.resolution = Math.round(screen.width*dpr)+" × "+Math.round(screen.height*dpr);
+    monitor.resolution = monitor.resolutionMode === "Automática" ? Math.round(screen.width*dpr)+" × "+Math.round(screen.height*dpr)+" · navegador" : monitor.resolutionMode+" · perfil visual";
     monitor.refresh = "No disponible en navegador";
     $("osd-clock").textContent = new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
   }
@@ -425,13 +438,19 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
     clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>toast.style.display="none",2100);
   }
   function switchDemoOS(input){
-    const profiles={"HDMI 1":{family:"windows",variant:"win10-11",label:"Windows 11"},"HDMI 2":{family:"mac",variant:"mac",label:"macOS"},"DisplayPort":{family:"linux",variant:"ubuntu",label:"Ubuntu"},"USB-C":{family:"android",variant:"android",label:"Android"}};
+    const profiles={
+      "HDMI 1 · Windows 11":{family:"windows",variant:"win10-11",label:"Windows 11"},"HDMI 2 · macOS":{family:"mac",variant:"mac",label:"macOS"},"DisplayPort · Ubuntu":{family:"linux",variant:"ubuntu",label:"Ubuntu"},"USB-C · Android":{family:"android",variant:"android",label:"Android"},
+      "HDMI 1 · Windows 7":{family:"windows",variant:"win7",label:"Windows 7"},"HDMI 2 · Windows XP":{family:"windows",variant:"xp",label:"Windows XP"},"DisplayPort · Fedora":{family:"linux",variant:"fedora",label:"Fedora"},"USB-C · Debian":{family:"linux",variant:"debian",label:"Debian"},
+      "DisplayPort · Arch Linux":{family:"linux",variant:"arch",label:"Arch Linux"},"HDMI 1 · Linux Mint":{family:"linux",variant:"mint",label:"Linux Mint"},"HDMI 2 · Manjaro":{family:"linux",variant:"manjaro",label:"Manjaro"},"DisplayPort · Kali Linux":{family:"linux",variant:"kali",label:"Kali Linux"},
+      "USB-C · openSUSE":{family:"linux",variant:"opensuse",label:"openSUSE"},"HDMI 1 · Pop!_OS":{family:"linux",variant:"pop",label:"Pop!_OS"},"HDMI 2 · elementary OS":{family:"linux",variant:"elementary",label:"elementary OS"},"DisplayPort · Zorin OS":{family:"linux",variant:"zorin",label:"Zorin OS"},
+      "USB-C · Alpine Linux":{family:"linux",variant:"alpine",label:"Alpine Linux"},"HDMI 1 · NixOS":{family:"linux",variant:"nixos",label:"NixOS"},"HDMI 2 · EndeavourOS":{family:"linux",variant:"endeavour",label:"EndeavourOS"}
+    };
     const profile=profiles[input]; if(!profile)return;
     family=profile.family;variant=profile.variant;label=profile.label;
     scene.dataset.family=family; $("system-icon").innerHTML=icons[variant]||icons.unknown;
     if(family==="windows"){$("system-title").textContent="Shutting down";$("system-message").textContent="Please wait while your computer shuts down.";$("system-detail").textContent="Closing applications and services…";}
     else if(family==="mac"){$("system-title").textContent="Shutting Down";$("system-message").textContent="Your Mac is shutting down.";$("system-detail").textContent="Saving your session…";}
-    else if(family==="linux"){$("system-title").textContent="Ubuntu is shutting down…";$("system-message").textContent="Please wait while system services are stopped.";$("system-detail").textContent="Stopping background services…";}
+    else if(family==="linux"){$("system-title").textContent=label+" is shutting down…";$("system-message").textContent="Please wait while "+label+" services are stopped.";$("system-detail").textContent="Stopping background services…";}
     else {$("system-title").textContent="Apagando dispositivo";$("system-message").textContent="El sistema se está cerrando…";$("system-detail").textContent="Deteniendo servicios del sistema";}
     $("phase").textContent=label+" · SIMULACIÓN";
   }
@@ -450,15 +469,15 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
     document.querySelectorAll(".osd-tab").forEach(b=>b.classList.toggle("active",b.dataset.page===p));
     let out="";
     if(p==="home"){
-      out='<h2>Menú del monitor</h2><p class="osd-sub">Selecciona una función del panel NOVA.</p><div class="osd-card">'+row("Estado","<span class='osd-badge'>ENCENDIDO · DEMO</span>")+row("Entrada activa",monitor.input)+row("Modo de imagen",monitor.mode)+row("Brillo",monitor.brightness+"%")+'</div><div class="osd-card"><div class="osd-row"><span>Acceso rápido</span><span class="osd-badge">OSD 1.0</span></div><div class="osd-list"><button class="osd-option" data-page="brightness">☼ <span>Brillo y contraste<small>Ajusta la luminosidad simulada</small></span> ›</button><button class="osd-option" data-page="input">⇄ <span>Fuente de entrada<small>HDMI / DisplayPort / USB-C</small></span> ›</button><button class="osd-option" data-page="settings">☷ <span>Configuración avanzada<small>Imagen, pantalla y sistema</small></span> ›</button></div></div>';
+      out='<h2>Menú del monitor</h2><p class="osd-sub">Selecciona una función del panel NOVA.</p><div class="osd-card">'+row("Estado","<span class='osd-badge'>ENCENDIDO · DEMO</span>")+row("Entrada activa",monitor.input)+row("Modo de imagen",monitor.mode)+row("Brillo",monitor.brightness+"%")+'</div><div class="osd-card"><div class="osd-row"><span>Acceso rápido</span><span class="osd-badge">OSD 1.0</span></div><div class="osd-list"><button class="osd-option" data-page="brightness">☼ <span>Brillo y contraste<small>Ajusta la luminosidad simulada</small></span> ›</button><button class="osd-option" data-page="input">⇄ <span>Fuente de entrada<small>Windows · macOS · Android · distribuciones Linux</small></span> ›</button><button class="osd-option" data-page="settings">☷ <span>Configuración avanzada<small>Imagen, pantalla y sistema</small></span> ›</button></div></div>';
     } else if(p==="brightness"){
       out='<h2>Brillo y pantalla</h2><p class="osd-sub">Controles visuales del monitor ficticio.</p><div class="osd-card">'+row("Brillo",monitor.brightness+'%')+'<input class="osd-range" id="brightness-range" type="range" min="0" max="100" value="'+monitor.brightness+'">'+row("Contraste",monitor.contrast+'%')+'<input class="osd-range" id="contrast-range" type="range" min="0" max="100" value="'+monitor.contrast+'"><div class="osd-row"><span>Filtro de luz azul</span><button class="osd-action" id="blue-light">'+(monitor.blue?"Activado":"Desactivado")+'</button></div></div><p class="osd-sub">El brillo solo modifica la apariencia de esta simulación; no cambia el brillo físico.</p>';
     } else if(p==="input"){
-      out='<h2>Fuente de entrada</h2><p class="osd-sub">Cambia la entrada simulada para probar otros sistemas operativos.</p><div class="osd-list">'+inputs.map(v=>'<button class="osd-option '+(monitor.input===v?'active':'')+'" data-input="'+v+'"><span>'+v+'<small>'+(v===monitor.input?"Fuente seleccionada":"Detectar señal (simulado)")+'</small></span><span class="osd-badge">'+(v===monitor.input?"ACTIVA":"CAMBIAR")+'</span></button>').join("")+'</div><div class="osd-card">'+row("Entrada seleccionada",monitor.input)+row("Señal","Simulada")+'</div>';
+      out='<h2>Fuente de entrada</h2><p class="osd-sub">Cambia la fuente y el perfil de sistema operativo para experimentar.</p><div class="osd-list">'+inputs.map(v=>'<button class="osd-option '+(monitor.input===v?'active':'')+'" data-input="'+v+'"><span>'+v+'<small>'+(v===monitor.input?"Fuente seleccionada":"Detectar señal (simulado)")+'</small></span><span class="osd-badge">'+(v===monitor.input?"ACTIVA":"CAMBIAR")+'</span></button>').join("")+'</div><div class="osd-card">'+row("Entrada seleccionada",monitor.input)+row("Señal","Simulada")+'</div>';
     } else if(p==="picture"){
       out='<h2>Modo de imagen</h2><p class="osd-sub">Perfiles de visualización de NOVA.</p><div class="osd-list">'+modes.map(v=>'<button class="osd-option '+(monitor.mode===v?'active':'')+'" data-mode="'+v+'"><span>'+v+'<small>'+({Estándar:"Equilibrio general",Película:"Tonos cálidos y suaves",Juego:"Contraste dinámico",Lectura:"Menos luz azul",sRGB:"Color de referencia",Eco:"Ahorro visual"}[v])+'</small></span><span class="osd-badge">'+(monitor.mode===v?"ACTIVO":"APLICAR")+'</span></button>').join("")+'</div>';
     } else if(p==="settings"){
-      out='<h2>Ajustes avanzados</h2><p class="osd-sub">Parámetros de pantalla y experiencia.</p><div class="osd-card">'+row("Resolución del navegador",monitor.resolution)+row("Escala de píxeles",String(window.devicePixelRatio||1)+"×")+row("Área visible",window.innerWidth+" × "+window.innerHeight)+row("Orientación",matchMedia("(orientation: portrait)").matches?"Vertical":"Horizontal")+'</div><div class="osd-card"><div class="osd-row"><span>Temperatura de color</span><select class="osd-select" id="color-temp">'+["Frío","Normal","Cálido"].map(v=>'<option '+(monitor.colorTemp===v?'selected':'')+'>'+v+'</option>').join("")+'</select></div><div class="osd-row"><span>Nitidez</span><span class="osd-value">'+monitor.sharpness+'%</span></div><input class="osd-range" id="sharpness-range" type="range" min="0" max="100" value="'+monitor.sharpness+'"></div><div class="osd-list"><button class="osd-option" data-page="brightness">☼ Brillo y contraste <span>›</span></button><button class="osd-option" data-page="system">ⓘ Información del sistema <span>›</span></button></div>';
+      out='<h2>Ajustes avanzados</h2><p class="osd-sub">Parámetros de pantalla y experiencia.</p><div class="osd-card">'+row("Resolución del navegador",monitor.resolution)+row("Escala de píxeles",String(window.devicePixelRatio||1)+"×")+row("Área visible",window.innerWidth+" × "+window.innerHeight)+row("Orientación",matchMedia("(orientation: portrait)").matches?"Vertical":"Horizontal")+'</div><div class="osd-card"><div class="osd-row"><span>Resolución de prueba</span><select class="osd-select" id="resolution-mode"><option>Automática</option><option>1280 × 720</option><option>1920 × 1080</option><option>2560 × 1440</option><option>3840 × 2160</option></select></div><p class="osd-sub">Perfil visual únicamente; no cambia la resolución real del dispositivo.</p><div class="osd-row"><span>Temperatura de color</span><select class="osd-select" id="color-temp">'+["Frío","Normal","Cálido"].map(v=>'<option '+(monitor.colorTemp===v?'selected':'')+'>'+v+'</option>').join("")+'</select></div><div class="osd-row"><span>Nitidez</span><span class="osd-value">'+monitor.sharpness+'%</span></div><input class="osd-range" id="sharpness-range" type="range" min="0" max="100" value="'+monitor.sharpness+'"></div><div class="osd-list"><button class="osd-option" data-page="brightness">☼ Brillo y contraste <span>›</span></button><button class="osd-option" data-page="system">ⓘ Información del sistema <span>›</span></button></div>';
     } else {
       out='<h2>Información del sistema</h2><p class="osd-sub">Identificación y señal de esta demostración.</p><div class="osd-card">'+row("Marca","NOVA DISPLAY")+row("Modelo","VX-27Q · Concept")+row("Sistema detectado",label)+row("Entrada",monitor.input)+row("Resolución física reportada",monitor.resolution)+row("Frecuencia","El navegador no la expone")+row("Estado","Simulador activo")+'</div><p class="osd-sub">La web no puede consultar el modelo real del monitor ni la frecuencia física exacta desde un navegador normal.</p>';
     }
@@ -469,6 +488,7 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
     const br=$("brightness-range");if(br)br.addEventListener("change",e=>{monitor.brightness=+e.target.value;renderOSD();});
     const cr=$("contrast-range");if(cr)cr.addEventListener("change",e=>{monitor.contrast=+e.target.value;renderOSD();});
     const sr=$("sharpness-range");if(sr)sr.addEventListener("change",e=>{monitor.sharpness=+e.target.value;renderOSD();});
+    const rm=$("resolution-mode");if(rm){rm.value=monitor.resolutionMode;rm.addEventListener("change",e=>{monitor.resolutionMode=e.target.value;measureDisplay();renderOSD();showToast("Perfil de resolución: "+monitor.resolutionMode);});}
     const ct=$("color-temp");if(ct)ct.addEventListener("change",e=>{monitor.colorTemp=e.target.value;showToast("Temperatura: "+monitor.colorTemp);});
     const bl=$("blue-light");if(bl)bl.addEventListener("click",()=>{monitor.blue=!monitor.blue;renderOSD();});
   }
