@@ -1,0 +1,43 @@
+name: "✨ Sugerir una función"
+description: "Propón una nueva función para el simulador o NOVA DISPLAY."
+title: "[IDEA] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Cuéntanos qué te gustaría añadir y cómo mejoraría la experiencia."
+  - type: dropdown
+    id: area
+    attributes:
+      label: "Área"
+      options:
+        - Más sistemas operativos
+        - Distribuciones Linux
+        - Animaciones y efectos
+        - Monitor OSD / NOVA
+        - Tienda NOVA DISPLAY
+        - Accesibilidad y rendimiento
+        - Móvil
+        - Otra
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: "¿Qué problema o necesidad resolvería?"
+      placeholder: "Me gustaría poder…"
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Describe tu propuesta"
+      placeholder: "La función podría…"
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Ideas o referencias (opcional)"
+    validations:
+      required: false
