@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">NOVA DISPLAY</title><desc id="desc">Geometric N mark in a blue gradient on a rounded dark square.</desc>
+<defs><linearGradient id="nova" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c3e8ff"/><stop offset=".52" stop-color="#86baff"/><stop offset="1" stop-color="#5278e8"/></linearGradient></defs>
+<rect x="4" y="4" width="120" height="120" rx="32" fill="#14263d" stroke="#8bc5ff" stroke-opacity=".45" stroke-width="2"/>
+<path d="M29 91V37l70 54V37" fill="none" stroke="url(#nova)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="102" cy="98" r="6" fill="#9bd2ff"/>
+</svg>
