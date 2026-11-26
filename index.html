@@ -271,14 +271,14 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   }
   $("phase").textContent = label + " · SIMULACIÓN";
 
-  let stage = 0, running = true, idleTimer = 0, stageTimer = 0, raf = 0;
+  let stage = 0, running = true, idleTimer = 0, stageTimer = 0, phaseTimer = 0, raf = 0;
   let x = 80, y = 65, vx = 2.2, vy = 1.65;
   const IDLE_MS = mobile ? 11000 : 16000;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function setStage(next) {
     stage = next;
-    clearTimeout(stageTimer);
+    clearTimeout(stageTimer); clearInterval(phaseTimer);
     if (next === 0) {
       scene.classList.remove("is-black");
       $("mobile-off").style.opacity = "0";
@@ -291,8 +291,26 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
     } else if (next === 1) {
       $("phase").textContent = mobile ? "PANTALLA APAGADA · SIMULACIÓN" : "PANTALLA NEGRA · SIMULACIÓN";
       content.classList.add("fade");
+      const shutdownSteps = family === "windows"
+        ? ["Closing applications…","Stopping system services…","Saving your settings…","Preparing shutdown…"]
+        : family === "mac"
+          ? ["Closing apps…","Saving your session…","Stopping background services…","Powering off…"]
+          : family === "linux"
+            ? ["Stopping user sessions…","Unmounting file systems…","Stopping system services…","Powering off…"]
+            : family === "ios" || family === "android"
+              ? ["Cerrando aplicaciones…","Deteniendo servicios…","Guardando estado…","Apagando pantalla…"]
+              : ["Ending user session…","Stopping services…","Preparing power off…"];
+      const shutdownDuration = mobile ? 6200 : variant === "xp" ? 5200 : variant === "win7" ? 6500 : family === "mac" ? 7800 : family === "linux" ? 7200 : 8500;
+      let step = 0;
+      $("system-detail").textContent = shutdownSteps[0];
+      phaseTimer = setInterval(() => {
+        if (!running || stage !== 1) return;
+        step = Math.min(step + 1, shutdownSteps.length - 1);
+        $("system-detail").textContent = shutdownSteps[step];
+      }, shutdownDuration / shutdownSteps.length);
       stageTimer = setTimeout(() => {
         if (!running || stage !== 1) return;
+        clearInterval(phaseTimer);
         content.style.display = "none";
         scene.classList.add("is-black");
         if (mobile) {
@@ -300,7 +318,7 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
           requestAnimationFrame(() => { $("mobile-off").style.opacity = "1"; });
         }
         setStage(2);
-      }, mobile ? 1800 : 2100);
+      }, shutdownDuration);
     } else {
       scene.classList.add("is-black");
       if (mobile) {
@@ -343,7 +361,7 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   }
   function stop() {
     running = false;
-    clearTimeout(idleTimer); clearTimeout(stageTimer);
+    clearTimeout(idleTimer); clearTimeout(stageTimer); clearInterval(phaseTimer);
     if (raf) cancelAnimationFrame(raf);
     $("reveal").style.display = "grid";
     hint.classList.add("hide");
