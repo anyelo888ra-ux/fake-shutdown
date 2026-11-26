@@ -68,7 +68,7 @@ footer{border-top:1px solid #ffffff15;padding:28px 0 40px;color:#8192aa;font-siz
 <header><div class="wrap nav">
 <a class="brand" href="#top" aria-label="NOVA DISPLAY inicio"><img src="nova-logo.svg" alt="" width="37" height="37"><span>NOVA DISPLAY<small>SEE BEYOND THE FRAME</small></span></a>
 <nav class="links"><a href="#coleccion">Colección</a><a href="#tecnologia">Tecnología</a><a href="#comparar">Comparador</a></nav>
-<a class="nav-cta" href="#coleccion">Explorar monitores ↗</a>
+<a class="nav-cta" href="#coleccion">Explorar monitores ↗</a><div data-language-mount></div>
 </div></header>
 <main id="top" class="wrap">
 <section class="hero">
@@ -114,4 +114,4 @@ function renderCompare(){panel.classList.toggle("show",chosen.size>0);grid.inner
 document.getElementById("clear-compare").addEventListener("click",()=>{chosen.clear();document.querySelectorAll("[data-compare]").forEach(b=>b.textContent="Comparar +");renderCompare()});
 })();
 </script>
-</body></html>
+<script src="nova-language.js"></script>\n</body></html>
