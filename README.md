@@ -20,6 +20,15 @@ A lightweight browser-only shutdown and monitor OSD simulator for desktop and mo
 ## NOVA DISPLAY concept store
 Open the [NOVA DISPLAY store](https://anyelo888ra-ux.github.io/fake-shutdown/nova). It includes a fictional monitor collection, category filters, product details and a small comparison tool. All model names and specifications are fictional; no products are sold.
 
+
+## Languages
+- Shared language preference between the simulator and NOVA DISPLAY, stored in the browser's local storage.
+- Automatic language choice from the browser's preferred languages, plus a manual selector with 100+ language options and names/flags.
+- The selector is available in the monitor's **Settings** page and in the NOVA store header.
+- Whole-page translation is provided by Google's Website Translator script, so it requires an internet connection and may be unavailable if the provider or browser blocks it. The saved language preference remains local.
+- The `/nova` route redirects to `nova.html`; both use the same language preference because they share the same site origin.
+- Language selection and translation do not change the operating system language or any real monitor settings.
+
 ## Contributing
 Use the GitHub issue chooser to report bugs, suggest features or leave feedback. Pull requests have a checklist template. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
