@@ -1,0 +1,75 @@
+name: "🐞 Reportar un error"
+description: "Informa de un fallo del simulador o de la tienda NOVA."
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Gracias por ayudar a mejorar Fake Shutdown Simulator. No incluyas datos personales."
+  - type: dropdown
+    id: area
+    attributes:
+      label: "¿Dónde ocurre?"
+      options:
+        - Simulador principal
+        - Detección de sistema operativo
+        - Animación de apagado / NO SIGNAL
+        - Menú OSD del monitor
+        - Tienda NOVA DISPLAY
+        - Móvil / pantalla táctil
+        - Otro
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: "Sistema o navegador"
+      options:
+        - Windows 11
+        - Windows 10
+        - Windows 7 / XP
+        - macOS
+        - Ubuntu
+        - Fedora
+        - Debian
+        - Arch / Manjaro
+        - Linux (otra distribución)
+        - Android
+        - iOS / iPadOS
+        - Otro / No lo sé
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: "Navegador y versión"
+      placeholder: "Ej. Firefox 132, Chrome 140, Opera 140"
+    validations:
+      required: false
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Pasos para reproducirlo"
+      description: "Explica qué hiciste antes de que apareciera el problema."
+      placeholder: "1. Abrí… 2. Seleccioné… 3. Ocurrió…"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: "¿Qué esperabas que ocurriera?"
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: "¿Qué ocurrió realmente?"
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: "Captura o información adicional (opcional)"
+      description: "No compartas contraseñas, tokens ni información privada."
+    validations:
+      required: false
