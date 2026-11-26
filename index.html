@@ -86,6 +86,7 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
 @media(prefers-reduced-motion:reduce){#progress,#spinner{animation:none}#progress{left:33%}*,*:before,*:after{transition-duration:.01ms!important}}
 
 /* Monitor OSD */
+#monitor-power{position:absolute;right:70px;bottom:48px;z-index:25;width:44px;height:44px;border:1px solid #ffffff35;border-radius:50%;background:#111923e8;color:#fff;cursor:pointer;opacity:.42;font-size:20px;backdrop-filter:blur(10px)}#monitor-power:hover{opacity:1}
 #monitor-key{position:absolute;right:18px;bottom:48px;z-index:25;border:1px solid #ffffff35;border-radius:50%;width:44px;height:44px;background:#111923e8;color:#fff;display:grid;place-items:center;cursor:pointer;opacity:.42;transition:.2s;backdrop-filter:blur(10px)}
 #monitor-key:hover,#monitor-key:focus-visible{opacity:1;transform:scale(1.06)}
 #osd{position:absolute;inset:0;z-index:28;display:none;place-items:center;background:radial-gradient(ellipse at center,#0b111bcc,#020407eF);backdrop-filter:blur(7px);padding:18px}
@@ -155,6 +156,7 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   <div id="phase">INICIANDO SIMULACIÓN</div>
   <button id="exit" type="button" title="Salir de la simulación">Salir · ESC</button>
 
+  <button id="monitor-power" type="button" title="Doble clic para apagar el monitor" aria-label="Control de encendido del monitor">⏻</button>
   <button id="monitor-key" type="button" title="Menú del monitor (M)" aria-label="Abrir menú del monitor">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
   </button>
@@ -390,7 +392,7 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
 
   // OSD de monitor ficticio: todos los cambios son locales a esta página.
   const osd = $("osd"), osdPanel = $("osd-panel"), toast = $("monitor-toast");
-  const monitor = { page:"home", brightness:82, contrast:72, sharpness:50, input:"HDMI 1", mode:"Estándar", colorTemp:"Frío", resolution:"", refresh:"", power:false, doubleAt:0 };
+  const monitor = { page:"home", brightness:82, contrast:72, sharpness:50, input:"HDMI 1", mode:"Estándar", colorTemp:"Frío", resolution:"", refresh:"", power:true, doubleAt:0 };
   const inputs = ["HDMI 1","HDMI 2","DisplayPort","USB-C"];
   const modes = ["Estándar","Película","Juego","Lectura","sRGB","Eco"];
   const resChoices = ["Automática","1920 × 1080","2560 × 1440","3840 × 2160"];
@@ -403,6 +405,17 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
   function showToast(msg){
     toast.textContent=msg; toast.style.display="block";
     clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>toast.style.display="none",2100);
+  }
+  function switchDemoOS(input){
+    const profiles={"HDMI 1":{family:"windows",variant:"win10-11",label:"Windows 11"},"HDMI 2":{family:"mac",variant:"mac",label:"macOS"},"DisplayPort":{family:"linux",variant:"ubuntu",label:"Ubuntu"},"USB-C":{family:"android",variant:"android",label:"Android"}};
+    const profile=profiles[input]; if(!profile)return;
+    family=profile.family;variant=profile.variant;label=profile.label;
+    scene.dataset.family=family; $("system-icon").innerHTML=icons[variant]||icons.unknown;
+    if(family==="windows"){$("system-title").textContent="Shutting down";$("system-message").textContent="Please wait while your computer shuts down.";$("system-detail").textContent="Closing applications and services…";}
+    else if(family==="mac"){$("system-title").textContent="Shutting Down";$("system-message").textContent="Your Mac is shutting down.";$("system-detail").textContent="Saving your session…";}
+    else if(family==="linux"){$("system-title").textContent="Ubuntu is shutting down…";$("system-message").textContent="Please wait while system services are stopped.";$("system-detail").textContent="Stopping background services…";}
+    else {$("system-title").textContent="Apagando dispositivo";$("system-message").textContent="El sistema se está cerrando…";$("system-detail").textContent="Deteniendo servicios del sistema";}
+    $("phase").textContent=label+" · SIMULACIÓN";
   }
   function openOSD(page){
     if(!running)return;
@@ -433,21 +446,22 @@ kbd{font:600 12px ui-monospace,Consolas,monospace;padding:5px 8px;border:1px sol
     }
     osdPanel.innerHTML=out;
     osdPanel.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>setPage(b.dataset.page)));
-    osdPanel.querySelectorAll("[data-input]").forEach(b=>b.addEventListener("click",()=>{monitor.input=b.dataset.input;setPage("input");showToast("Entrada cambiada: "+monitor.input+" · señal simulada");}));
+    osdPanel.querySelectorAll("[data-input]").forEach(b=>b.addEventListener("click",()=>{monitor.input=b.dataset.input;switchDemoOS(monitor.input);setPage("input");showToast("Entrada: "+monitor.input+" · "+label+" · señal simulada");}));
     osdPanel.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{monitor.mode=b.dataset.mode;setPage("picture");showToast("Modo de imagen: "+monitor.mode);}));
-    const br=$("brightness-range");if(br)br.addEventListener("input",e=>{monitor.brightness=+e.target.value;renderOSD();});
-    const cr=$("contrast-range");if(cr)cr.addEventListener("input",e=>{monitor.contrast=+e.target.value;renderOSD();});
-    const sr=$("sharpness-range");if(sr)sr.addEventListener("input",e=>{monitor.sharpness=+e.target.value;renderOSD();});
+    const br=$("brightness-range");if(br)br.addEventListener("change",e=>{monitor.brightness=+e.target.value;renderOSD();});
+    const cr=$("contrast-range");if(cr)cr.addEventListener("change",e=>{monitor.contrast=+e.target.value;renderOSD();});
+    const sr=$("sharpness-range");if(sr)sr.addEventListener("change",e=>{monitor.sharpness=+e.target.value;renderOSD();});
     const ct=$("color-temp");if(ct)ct.addEventListener("change",e=>{monitor.colorTemp=e.target.value;showToast("Temperatura: "+monitor.colorTemp);});
     const bl=$("blue-light");if(bl)bl.addEventListener("click",()=>{monitor.blue=!monitor.blue;renderOSD();});
   }
   $("monitor-key").addEventListener("click",()=>osd.classList.contains("open")?closeOSD():openOSD("home"));
+  $("monitor-power").addEventListener("click",()=>showToast("Doble clic para alternar el monitor"));
+  $("monitor-power").addEventListener("dblclick",()=>{monitor.power=!monitor.power;if(monitor.power){setStage(0);showToast("Monitor encendido · simulación");}else{closeOSD();setStage(2);showToast("Monitor apagado · NO SIGNAL");}});
   $("osd-close").addEventListener("click",closeOSD);
   osd.addEventListener("click",e=>{if(e.target===osd)closeOSD();});
   document.querySelectorAll(".wheel-btn").forEach(b=>b.addEventListener("click",()=>setPage(b.dataset.page)));
   document.querySelectorAll(".osd-tab").forEach(b=>b.addEventListener("click",()=>setPage(b.dataset.page)));
-  $("no-signal").addEventListener("dblclick",()=>{monitor.power=!monitor.power;if(monitor.power){setStage(0);showToast("Monitor reactivado · simulación");}else{setStage(2);showToast("Monitor en reposo · NO SIGNAL");}});
-  $("monitor-key").addEventListener("dblclick",e=>{e.preventDefault();monitor.power=!monitor.power;if(monitor.power){setStage(0);showToast("Monitor reactivado · simulación");}else{closeOSD();setStage(2);showToast("Monitor apagado · NO SIGNAL");}});
+  $("no-signal").addEventListener("dblclick",()=>{monitor.power=true;setStage(0);showToast("Monitor reactivado · simulación");});
   document.addEventListener("keydown",e=>{
     if(e.key.toLowerCase()==="m"&&!e.repeat){if(osd.classList.contains("open"))closeOSD();else openOSD("home");}
     if(e.key==="Escape"&&osd.classList.contains("open")){e.stopPropagation();closeOSD();}
